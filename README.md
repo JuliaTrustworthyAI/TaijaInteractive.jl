@@ -1,5 +1,8 @@
 # TaijaInteractive
 
+> [!NOTE]  
+> This is an early-stage project developed by students from TU Delft. It is not currently actively maintained by the Taija dev team. If you're interested in contributing to this project, please feel free to reach out to us. 
+
 Documentation for [TaijaInteractive.jl](https://github.com/juliatrustworthyai/TaijaInteractive.jl).
 
 `TaijaInteractive.jl` is a package for connecting [Taija](https://github.com/JuliaTrustworthyAI) packages with a graphical user interface. Taija currently covers a range of approaches towards making AI systems more trustworthy. Currently, [Counterfactual explanations](https://github.com/JuliaTrustworthyAI/CounterfactualExplanations.jl?tab=readme-ov-file), [Conformal predictions](https://github.com/JuliaTrustworthyAI/ConformalPrediction.jl) and [Laplace Reductinos](https://github.com/JuliaTrustworthyAI/LaplaceRedux.jl) are supported.
