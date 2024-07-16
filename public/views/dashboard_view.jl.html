@@ -1,0 +1,302 @@
+<html>
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Karla:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/dashboard_view/dashboard_style.css">
+    <link rel="stylesheet" href="/css/dashboard_view/menu.css">
+</head>
+
+<body>
+    <header id="header"></header>
+    <div id="dashboard-options">
+        <div id="options">
+            <div id="options-title" class="title">
+                Which element would you like to add?
+            </div>
+
+            <div id="element-buttons">
+                <button onclick="loadProperties('fineTune')" class="element-button">Fine-Tuning Analysis</button>
+                <button onclick="loadProperties('modelExplanation')" class="element-button">Model Explanation</button>
+                <button onclick="loadProperties('counterfactual')" class="element-button" onclick="createCounter()">Counterfactual</button>
+                <button onclick="loadProperties('dataExplanation')" class="element-button">Data Explanation</button>
+            </div>
+    
+            <div id="properties">
+                <div id="properties-title" class="title">
+                    Choose the Properties
+                </div>
+                <form action="javascript:createCounter()" id="counterfactual-form" class="element-form">
+                    <div class="label-input">
+                        <label for="data-selector">Data</label>
+                        <select name="data" id="data-selector">
+                            <% for_each(datasets) do dataset %>
+                                <option value="$(dataset.id)"> $(dataset.name).$(dataset.format)</option>
+                            <% end %>
+                        </select>
+                    </div>
+                    
+                    <div class="label-input">
+                        <label for="classifier-selector">Classifier</label>
+                        <select name="classifier" id="classifier-selector">
+                            <% for_each(models) do model %>
+                                <option value="$(model.id)">$(model.name).$(model.format)</option>
+                            <% end %>
+                        </select>
+                    </div>
+                    
+                    <div class="label-input">
+                        <label for="element-title">Title</label>
+                        <input type="text" id="element-title">
+                    </div>
+
+                    <div class="label-input">
+                        <label for="target">Target</label>
+                        <select id="target"></select>
+                    </div>
+
+                    <div class="label-input">
+                        <label for="factual">Factual</label>
+                        <select id="factual"></select>
+                    </div>
+
+                    <div class="label-input">
+                        <label for="generator-selector">Generator</label>
+                        <select name="generator" id="generator-selector">
+                        </select>
+                    </div>
+
+                    <button class="element-submit">Create Counterfactual</button>
+                </form>
+
+                <div id="dataset-info-form" class="element-form">
+                    
+
+                    <form class="label-input" action="/pool/$(id)/create_dataset" id="dataset-form" method="POST" enctype="multipart/form-data">
+                        <button class="element-submit">Add New Dataset</button>
+                        <input type="file" name="DatasetFile" id="add-data" required/>
+                    </form>
+                    
+                    <button class="element-submit" onclick="createDatasetInfo()">Create Dataset Info</button>
+                </div>
+
+                <div id="model-info-form" class="element-form">
+                    <div class="label-input">
+                        <label for="model-selector-for-info-2">Model</label>
+                        <select name="model" id="model-selector-for-info-2">
+                            <% for_each(models) do model %>
+                                <option value="$(model.id)"> $(model.name).$(model.format)</option>
+                            <% end %>
+                        </select>
+                    </div>
+
+                    <form class="label-input" action="/pool/addModel" id="model-form" method="POST" enctype="multipart/form-data">
+                        <button class="element-submit">Add New Model</button>
+                        <input type="file" name="ModelFile" id="add-model" required/>
+                    </form>
+                    
+                    <button class="element-submit" onclick="createModelInfo()">Create Model Info</button>
+                </div>
+            </div>
+        </div>
+    
+        <div id="dashboard" >
+            <div id="dashboard-title" class="title">
+                $(dashboard.title)
+            </div>
+            
+            <div id="elements" class="container" name="container">
+                <% for_each(elements) do element %>
+                    $(string(element))            
+                <% end %>
+            </div>
+
+            <div id="dashboard-buttons">
+                <button id="export-dashboard" class="dashboard-button" onclick="generatePdf()">Export Dashboard In PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="vertical-menu">
+        
+        <button id="vertical-menu-toggle">
+            <span id="vertical-menu-toggle-text">
+                <i >Extend Menu</i>
+            </span>
+        </button>
+
+        <div id="inner-vertical-menu" style="display: none;">
+            <div class="inner-vertical-menu-items">
+                <div class="inner-vertical-menu-item">
+                    <h3>
+                        Please select an element
+                    </h3>
+                </div>
+                <div class="inner-vertical-menu-item">
+                    <div id="element-button-container"> 
+                        <button onclick="openModelOverlay()" class="element-button" id="button-model-info-overlay">Model Info </button>
+                        <button onclick="openDatasetOverlay()" class="element-button" id="button-dataset-info-overlay">Dataset Info</button>
+                    </div>
+                    <div id="element-button-container"> 
+                        <% for_each(keys(menu)) do item %>
+                            <button class="element-button" data-id= "$(item)"> $(item) </button>
+                        <% end %>
+                        
+                    $(string(renderedMenu))
+                    $(string(renderedLaplace))
+                    $(string(renderedCounterfactual))
+                    </div>
+                </div>
+                
+            </div>
+            <div class="inner-vertical-menu-import-items">
+                <button id="button-model-import-overlay" class="inner-vertical-menu-import-button">Import Model</button>
+                <button id="button-dataset-import-overlay" class="inner-vertical-menu-import-button">Import Dataset</button>
+            </div>
+        </div>
+        
+    <div id="model-info-overlay" class="overlay">
+        
+        <div id="model-info-overlay-content" class="overlay-content" style="gap: 0px">
+
+        <div class="label-input form-group">
+            <label class="form-label" for="model-selector-for-info">Select the Model</label>
+            <select class="form-input" name="model" id="model-selector-for-info">
+                <% for_each(models) do model %>
+                    <option value="$(model.id)"> $(model.name).$(model.type)</option>
+                <% end %>
+            </select>
+            
+        </div>
+        
+        <button class="inner-vertical-menu-submit" onclick="createModelInfo()" style="margin-bottom: 0px;">Create Model Info</button>
+        
+        </div>
+    </div>
+
+    <div id="dataset-info-overlay" class="overlay">
+    
+        <div id="dataset-info-overlay-content" class="overlay-content" style="gap: 0px">
+
+        <div class="label-input form-group">
+            <label class="form-label" for="data-selector-for-info">Select the Dataset</label>
+            <select class="form-input" name="data" id="data-selector-for-info">
+                <% for_each(datasets) do dataset %>
+                    <option value="$(dataset.id)"> $(dataset.name).$(dataset.format)</option>
+                <% end %>
+            </select>
+        </div>
+        
+        <button class="inner-vertical-menu-submit" onclick="createDatasetInfo()" style="margin-bottom: 0px">Create Dataset Info</button>
+        
+    </div>
+        
+    </div>
+
+        
+    </div>
+
+   
+    <footer id="footer"></footer>
+    <div id="model-overlay" class="overlay">
+        <div id="model-overlay-content" class="overlay-content tab-container" style="gap: 0px">
+            <div class="tabs">
+                <button class="tab-button active" onclick="openTab(event, 'local')">Local</button>
+                <button class="tab-button" onclick="openTab(event, 'transformers')">Transformers</button>
+                <button class="tab-button" onclick="openTab(event, 'flux')">Flux</button>
+                <button class="tab-button" onclick="openTab(event, 'ml')">ML</button>
+            </div>
+            <div id="local" class="tab-content active">
+                <div class="upload-container">
+                    <div id="model-drop-area" class="drop-area" style="margin-top: 10px;">
+                        <p>Drag & Drop your model files here or click to upload</p>
+                        <div id="model-uploaded-file-container" class="uploaded-file" style="display: none; gap: 5px">
+                            <svg height="22px" width="22px" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22">
+                                <path stroke="#000000" d="M19 9V17.8C19 18.9201 19 19.4802 18.782 19.908C18.5903 20.2843 18.2843 20.5903 17.908 20.782C17.4802 21 16.9201 21 15.8 21H8.2C7.07989 21 6.51984 21 6.09202 20.782C5.71569 20.5903 5.40973 20.2843 5.21799 19.908C5 19.4802 5 18.9201 5 17.8V6.2C5 5.07989 5 4.51984 5.21799 4.09202C5.40973 3.71569 5.71569 3.40973 6.09202 3.21799C6.51984 3 7.0799 3 8.2 3H13M19 9L13 3M19 9H14C13.4477 9 13 8.55228 13 8V3" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+                            </svg>
+                            <label id="model-uploaded-file-label" class="uploaded-file-label" style="font-size: medium"></label>
+                        </div>
+                        <input class="fileElement" type="file" id="modelFileElem" multiple>
+                    </div>
+                </div>
+                <button id="upload-model-button" class="button-overlay-submit" onclick="uploadModel()">Load Model</button>
+            </div>
+            <div id="transformers" class="tab-content" style="align-items: normal;">
+                <div class="form-group">
+                    <label class="form-label" for="transformer-input">Huggingface Repository</label>
+                    <input type="text" id="transformers-input" class="form-input" placeholder="Enter Transformers Data">
+                    <div class="huggingface-status-container">
+                        <div class="huggingface-status-circle" onclick="updateHuggingfaceStatus()"></div>
+                        <span class="huggingface-status-text" onclick="showLoginOverlay()">Hugging Face authorization</span>
+                    </div>
+                </div>
+                <button class="button-overlay-submit" onclick="requestModelDownload('transformers')">Download</button>
+            </div>
+            <div id="flux" class="tab-content" style="align-items: normal;">
+                <div class="form-group">
+                    <label class="form-label" for="transformer-input">Huggingface Repository</label>
+                    <input type="text" id="flux-input" class="form-input" placeholder="Enter Flux Data">
+                    <div class="huggingface-status-container">
+                        <div class="huggingface-status-circle" onclick="updateHuggingfaceStatus()"></div>
+                        <span class="huggingface-status-text" onclick="showLoginOverlay()">Hugging Face authorization</span>
+                    </div>
+                </div>
+                <button class="button-overlay-submit" onclick="requestModelDownload('flux')">Download</button>
+            </div>
+            <div id="ml" class="tab-content" style="align-items: normal;">
+                <div class="form-group">
+                    <label class="form-label" for="transformer-input">Huggingface Repository</label>
+                    <input type="text" id="ml-input" class="form-input" placeholder="Enter MLJ Data">
+                    <div class="huggingface-status-container">
+                        <div class="huggingface-status-circle" onclick="updateHuggingfaceStatus()"></div>
+                        <span class="huggingface-status-text" onclick="showLoginOverlay()">Hugging Face authorization</span>
+                    </div>
+                </div>
+                <button class="button-overlay-submit" onclick="requestModelDownload('ml')">Download</button>
+            </div>
+        </div>
+    </div>
+    <div id="dataset-overlay" class="overlay">
+        <div id="dataset-overlay-content" class="overlay-content">
+            <h3>Dataset Import</h3>
+            <div class="upload-container">
+                <div id="dataset-drop-area" class="drop-area">
+                    <p>Drag & Drop your files here or click to upload</p>
+                    <div id="dataset-uploaded-file-container" class="uploaded-file" style="display: none; gap: 5px">
+                        <svg height="22px" width="22px" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22">
+                            <path stroke="#000000" d="M19 9V17.8C19 18.9201 19 19.4802 18.782 19.908C18.5903 20.2843 18.2843 20.5903 17.908 20.782C17.4802 21 16.9201 21 15.8 21H8.2C7.07989 21 6.51984 21 6.09202 20.782C5.71569 20.5903 5.40973 20.2843 5.21799 19.908C5 19.4802 5 18.9201 5 17.8V6.2C5 5.07989 5 4.51984 5.21799 4.09202C5.40973 3.71569 5.71569 3.40973 6.09202 3.21799C6.51984 3 7.0799 3 8.2 3H13M19 9L13 3M19 9H14C13.4477 9 13 8.55228 13 8V3" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+                        </svg>
+                        <label id="dataset-uploaded-file-label" class="uploaded-file-label" style="font-size: medium"></label>
+                    </div>
+                    <input class="fileElement" type="file" id="datasetFileElem" multiple>
+                </div>
+            </div>
+            
+            <button id="upload-dataset-button" onclick="uploadDataset($(id))" class="element-submit">Add New Dataset</button>
+        </div>
+    </div>
+    <script src="/js/onload.js"></script>
+    <script src="/js/dashboard_view/dataset_overlay.js"></script>
+    <script src="/js/dashboard_view/model_overlay.js"></script>
+    <script src="/js/dashboard_view/huggingface.js"></script>
+    <script src="/js/dashboard_view/onload.js"></script>
+    <script src="/js/dashboard_view/vertical_menu.js"></script>
+
+    <script src=
+"https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
+      </script>
+   
+   
+<script>
+
+
+</script> 
+
+
+
+</body>
+</html>

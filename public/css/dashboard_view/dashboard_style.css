@@ -1,0 +1,385 @@
+/* 
+General Style
+*/
+:root {
+    --primary-color: #3C50E0;
+    --secondary-color: #DFE2E6;
+    --neutral-color: #ffffff;
+    --success-color: #34D399;
+    --danger-color: #F87171;
+    --warning-color: #FBBF24;
+    --info-color: #17a2b8;
+}
+
+h1 {
+    color: var(--success-color);
+}
+
+h2, h3 { 
+    color: #515151;
+    font-family: 'Inter';
+    font-weight: 800;
+    font-size: 25px;
+    text-align:center;
+}
+
+h6 {
+    font-family: 'Inter';
+    font-weight: 800;
+    font-size: 15px;
+    text-align:center;
+ 
+    position:relative;
+    margin-top:15px;
+}
+
+
+body {
+    text-align: center;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+}
+
+
+a { 
+    text-decoration: none; 
+}
+
+/*
+Elements and Draggable container style
+*/
+
+.container {
+    position:relative;
+}
+#dashboard {
+    background-color: var(--secondary-color);
+    border-radius: 6px;
+    
+    width: 86.67vw;
+}
+
+#dashboard-title {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+#options {
+    display: none;
+    flex-direction: column;
+    z-index: 1;
+    background: #DCE7FD;
+    width: 427px;
+}
+
+#dashboard-options {
+    display: flex;
+    position: relative;
+    margin-top: 32px;
+}
+
+.title {
+    background: var(--primary-color);
+    font-family: Inter;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 37.5px;
+    display: flex;
+    width: 100%;
+    color: #FFFFFF;
+    justify-content: center; /* centers the text horizontally */
+    align-items: center;
+    height: 76px;
+    gap: 0px;
+    opacity: 0px;
+    position: relative;
+}
+
+#dataset-overlay-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    justify-items: left;
+    
+    padding: 20px;
+
+}
+
+#element-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: start;
+    margin: 5px;
+}
+
+#properties {
+    display: none;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.element-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    margin-left: 21px;
+    margin-right: 21px;
+}
+
+
+
+.axis-input {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 175px;
+}
+
+#axes {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.label-input {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: left;
+    
+    width: 100%;
+}
+
+.label-input label {
+    color: #515151;
+
+    font-family: Inter;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 30px;
+
+    text-align: left;
+
+    justify-self: left;
+}
+
+.label-input input {
+    background-color: white;
+
+    width: 205px;
+    height: 49px;
+    
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 22.5px;
+
+    flex: 0;
+}
+
+.label-input select {
+    width: 205px;
+    background-color: white;
+    height: 49px;
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 22.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+
+.axis-input label {
+    width: 74px;
+    background-color: #00068F;
+    height: 49px;
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 22.5px;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.axis-input input {
+    width: 103px;
+    background-color: white;
+    height: 49px;
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 22.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#elements {
+    height: 1000px;
+}
+
+.element-submit {
+    width: 247px;
+    height: 62px;
+    top: 846px;
+    left: 73px;
+    gap: 8px;
+    opacity: 0px;
+    background: rgb(50, 48, 48);
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 30px;
+}
+
+#dashboard-buttons {
+    display: flex;
+    justify-content: space-evenly;
+
+    margin: 15px;
+    
+}
+
+.dashboard-button {
+    width: 327px;
+    height: 62px;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 30px;
+}
+
+#add-component {
+    background: var(--success-color);
+}
+
+#save-dashboard, #export-dashboard {
+    background: #000000;
+}
+
+.draggable {
+    background: var(--neutral-color);
+    display: inline-block;
+
+    border-radius: 6px;
+
+    position:absolute;
+}
+
+.move {
+    width: 46px;
+    height: 42px;
+    background: #00FFEF;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+.delete {
+    width: 46px;
+    height: 42px;
+    background: #FF0000;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+.element-header {
+    background: var(--primary-color);
+    
+    font-family: Inter;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 30px;
+
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    gap: 20px;
+}
+
+.element-title {
+    font-family: Inter;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 30px;
+    color: #FFFFFF;
+}
+
+.element-button-delete {
+    margin-top: 6px;
+    margin-left: 6px;
+}
+
+.counterfactual{
+    position:relative;
+    top: 30px;
+}
+
+.download-button { 
+
+    margin-top: 12px;
+    margin-right: 12px;
+
+
+    margin-left: auto;
+} 
+
+/*
+.download-button:hover { 
+    background-color: #28c810; 
+} */
+
+.tabs {
+    display: flex;
+    cursor: pointer;
+    gap: 3px;
+}
+
+.tab-button {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    background-color: var(--secondary-color);
+    border: 1px solid #ccc;
+}
+
+.tab-button.active {
+    background-color: var(--primary-color);
+}
+
+.tab-content {
+    display: none;
+    flex-direction: column;
+    justify-items: left;
+    justify-content: flex-start;
+    
+    border-top: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.button-overlay-submit {
+    margin-top: 15px;
+    /*background-color: var(--success-color);*/
+}
+
+.model-input {
+    width: 100px;
+}
+
+
+

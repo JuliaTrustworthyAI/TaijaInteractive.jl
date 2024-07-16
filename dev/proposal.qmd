@@ -1,0 +1,50 @@
+---
+format: 
+  commonmark:
+    variant: -raw_html+tex_math_dollars
+    wrap: none
+    mermaid-format: png
+crossref:
+  fig-prefix: Figure
+  tbl-prefix: Table
+bibliography: bib.bib
+output: asis
+jupyter: julia-1.10
+execute: 
+  freeze: auto
+  eval: true
+  echo: true
+  output: false
+---
+
+# [TaijaInteractive.jl](https://github.com/JuliaTrustworthyAI/TaijaInteractive.jl): Trust through Interaction with AI
+
+The past few years have shown that companies will not shy away from deploying black-box AI models in the real world, even if the underlying technology and its potential impact on society are not well understood. For better or worse, open-source developers have been at the forefront of this development, and it is our responsibility to ensure that the technology we develop is trustworthy. This is why we are developing [Taija](https://github.com/JuliaTrustworthyAI), an ecosystem of packages geared towards trustworthy AI in Julia. 
+
+Previous software projects have contributed to the development of some of these packages. These developments have powered exciting research: in this [paper](https://arxiv.org/abs/2312.10648), for example, we have used [CounterfactualExplanations.jl](https://github.com/JuliaTrustworthyAI/CounterfactualExplanations.jl) to generate and benchmark millions of explanations for AI models on one of our supercomputers. But while we have made efforts to thoroughly document our packages, interacting with them still hinges on basic programming skills and knowledge of Julia. 
+
+Research has shown that fostering interactions between humans and AI is one of the keys to establishing trust [@miller2019explanation]. The goal of this project is therefore to build an interactive web application that enables users to use Taija's functionality in their interactions with AI models without having to write any code. Instead of merely downloading pre-trained models and fine-tuning them for their specific use case, users will be able to explain their decisions, explore their internals, quantify their predictive uncertainty and understand their limitations. 
+
+The challenge for the team will be to design an intuitive, user-friendly and fast interface that enables access to the full functionality of Taija. This will require work on the front-end, back-end and the integration of Taija's packages. The team will have to make design decisions on how to best present the information to the user, how to handle the communication between the front-end and the back-end, and how to ensure that the application is fast and responsive (Julia will help with that!). The team will also need to decide how to access models and data, how to handle user authentication and how to ensure that the application is secure. 
+
+## Key Features
+
+- An interface to pull in data and models from the user's local machine or the web.
+- An interface to explain the predictions of AI models.
+- An interface to explore the internals of AI models.
+- An interface to quantify the predictive uncertainty of AI models.
+- Fine-tuning with a twist: an interface to fine-tune models to deliver better explanations, better robustness and better predictive uncertainty.
+
+## Tools and Requirements
+
+Our preferred stack for this project is:
+
+- [Julia](https://julialang.org/): the programming language that powers Taija.
+- [Genie.jl](https://genieframework.com/): a full-stack web framework for Julia. 
+- [Hugging Face](https://huggingface.co/): a repository of pre-trained models and datasets for NLP. Can be accessed through [Transformers.jl](https://chengchingwen.github.io/Transformers.jl/dev/getstarted/#Using-(HuggingFace)-Pre-trained-Models) and [HuggingFaceApi.jl](https://github.com/FluxML/HuggingFaceApi.jl).
+
+We encourage the team to use this stack as a starting point and to explore other tools and technologies as needed.
+
+Alternatively, the team could also consider using the Shiny framework (which Patrick has experience with) or other established frameworks. This would allow the team to build the application in R or Python, which might be more familiar to some team members. There is a substantial bottleneck involved here though: you would first need to build an interface between Julia and R/Python, which would be a non-trivial software project in itself. To this end, you could take inspiration from [PySR](https://github.com/MilesCranmer/PySR): a Python front-end to Julia's [SymbolicRegression.jl](https://github.com/MilesCranmer/SymbolicRegression.jl).
+
+## References

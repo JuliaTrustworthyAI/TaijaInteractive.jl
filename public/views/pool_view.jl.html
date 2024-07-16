@@ -1,0 +1,84 @@
+<html>
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Karla:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/pool_view/pool_view.css">
+</head>
+
+<body>
+    <header id="header"></header>
+    <main style="display: flex;">
+        <div id="boards-display">
+            <div class="wrapper"> 
+                <div id="boards-info">
+                    <h2 id="page-title">Dashoards</h2>
+                    <p> There are $(length(dashboards)) boards. </p>
+                </div>
+                <div id="boards-settings">
+                    <div id="search-part">
+                        <h4 id="search-title"> Search: </h4>
+                        <input class="part-input" type="text" name="myText" id="searchbar"
+                            name="search"  
+                        onkeyup="searchBoard()" />
+                    </div>
+                
+                    <div id="sort-part">
+                        <h4 id="sort-title"> Sort: </h4>
+                        <select class="part-input" id="sortbar" onchange="sortBoards()">
+                            <option value="name">Alphabetically</option>
+                            <option value="date">Creation Date</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="container" id="carousel-container">
+                    <div class="carousel-view">
+                        <i id="left"></i>
+                        <div id="item-list" class="item-list">
+                            <% for_each(dashboards) do dashboard %>
+                            <div id="item" class="item" data-id="$(dashboard.id);$(dashboard.title);$(dashboard.creationTime)">
+                                <div class="dashboard-buttons">
+                                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect data-id="$(dashboard.id)" onclick="deleteBoard('$(dashboard.id)')" x="0.5" width="32" height="32" rx="6" fill="#F87171"/>
+                                        <path d="M13.2957 11.7229L13.2963 11.7235L16.994 15.43L20.7043 11.7375L21.0577 12.0913L20.705 11.7369L20.7047 11.7371C21.0023 11.4403 21.4791 11.4404 21.7766 11.7375C22.0745 12.0351 22.0745 12.5126 21.7766 12.8102L21.7759 12.8108L18.0658 16.5031L21.762 20.2081C21.7621 20.2082 21.7622 20.2083 21.7623 20.2084C22.0599 20.506 22.0597 20.9833 21.762 21.2807L21.4086 20.927L21.7619 21.2807C21.6232 21.4193 21.4225 21.5 21.2331 21.5C21.0438 21.5 20.8431 21.4193 20.7043 21.2807L21.0577 20.927L20.7043 21.2807L16.9933 17.5743L13.2963 21.2801L13.2957 21.2808C13.1569 21.4193 12.9562 21.5 12.7669 21.5C12.5775 21.5 12.3768 21.4193 12.2381 21.2808L12.5914 20.927L12.238 21.2807C11.9404 20.9835 11.9401 20.5065 12.2372 20.2089C12.2375 20.2087 12.2378 20.2084 12.238 20.2081L15.9215 16.5025L12.2234 12.7956C12.2233 12.7954 12.2232 12.7953 12.2231 12.7952C11.9255 12.4976 11.9256 12.0203 12.2234 11.7229C12.521 11.4257 12.9981 11.4257 13.2957 11.7229Z" fill="white" stroke="white"/>
+                                    </svg>
+                                        
+                                    
+                                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <rect onclick="editDashboardName('$(dashboard.id)')" x="0.5" width="32" height="32" rx="6" fill="#3C50E0"/>
+                                        <g clip-path="url(#clip0_2018_174)">
+                                        <path d="M9.52696 23.8802L22.6458 10.509L20.7809 8.59618L7.66193 21.9674L6.52472 24.5302C6.41554 24.7902 6.68847 25.0873 6.94321 24.976L9.52696 23.8802ZM23.6193 9.54331L24.7202 8.42904C25.2841 7.85333 25.3114 7.24977 24.8111 6.73907L24.4836 6.40479C23.9923 5.90337 23.3919 5.94979 22.8369 6.50693L21.727 7.62119L23.6193 9.54331Z" fill="white" fill-opacity="0.85"/>
+                                        </g>
+                                        <defs>
+                                        <clipPath id="clip0_2018_174">
+                                        <rect width="32" height="32" fill="white" transform="translate(6.5 6)"/>
+                                        </clipPath>
+                                        </defs>
+                                    </svg>
+                                </div>
+
+                                <a class="board-link" href="/pool/$(dashboard.id)">
+                                    <div class="dashboard-title">
+                                        $(dashboard.title)
+                                    </div>
+                                </a>
+                            </div>
+                            <% end %>
+                        </div>
+                        <i id="right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button id="button-create-dashboard">Add Board</button>
+    </main>
+    <div style="width: 80%; border: 1px #E6E6E6 solid"></div>
+    <footer id="footer"></footer>
+    
+    <script src="/js/onload.js"></script>
+    <script src="/js/pool_view/onload.js"></script>
+</body>
+</html>

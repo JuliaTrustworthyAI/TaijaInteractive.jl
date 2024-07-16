@@ -1,0 +1,60 @@
+# App
+docs/build/*
+build/*
+cache/*
+config/secrets.jl
+log/*
+sessions/*
+!*.gitkeep
+.env
+public/uploads/*
+public/files/*
+public/img/*
+lcov.info
+coverage/
+hall_of_fame_*
+test/webdrivers/*
+
+!public/files/models
+!public/files/models/.gitkeep
+*.bson
+# Vagrant
+.vagrant
+Vagrantfile
+
+# Numerous always-ignore extensions
+*.diff
+*.err
+*.orig
+*.log
+*.rej
+*.swo
+*.swp
+*.vi
+*~
+*.sass-cache
+*.cov
+
+# OS or Editor folders
+.DS_Store
+.cache
+.project
+.settings
+.tmproj
+nbproject
+Thumbs.db
+*.sublime-project
+*.sublime-workspace
+.vscode
+.tags*
+.tags
+
+# NPM packages folder.
+node_modules/
+
+# Database
+db/*.sqlite
+
+# environment variables file
+.env
+.vs/

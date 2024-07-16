@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/models.css">
+    <title>Models View</title>
+</head>
+<body>
+    <header></header>
+
+    <div class="container">
+        <table>
+            <tr>
+                <th> identifier </th>
+                <th> name </th>
+                <th> format </th>
+                <th> type </th>
+                <th> description </th>
+            </tr> 
+            <% for_each(models) do model %>
+                <tr>
+                    <td> $(model.id) </td>
+                    <td> $(model.name) </td>
+                    <td> $(model.format) </td>
+                    <td> $(model.type) </td>
+                    <td> $(model.description) </td>
+                </tr>
+            <% end %>
+            
+        </table> 
+    </div>
+    <footer></footer>
+
+    <script src="/js/onload.js"></script>
+</body>
+</html>

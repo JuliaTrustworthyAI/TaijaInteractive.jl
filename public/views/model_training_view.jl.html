@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Model Training</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Karla:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/model_training_view/model_training_styles.css">
+</head>
+<body>
+    <header id="header"></header>
+    <main>
+        <div class="container">
+            <div class="form">
+                <h1 style="text-align: left; margin-bottom: 40px;">Train Your Model</h1>
+                <div class="form-group">
+                    <label class="form-label">Name</label>
+                    <input id="model-name-input" class="form-input" type="text">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="model">Choose a model</label>
+                    <select class="form-input" id="model">
+                        <option value="MLP">MLP</option>
+                        <option value="Linear">Linear</option>
+                        <option value="DeepEnsemble">DeepEnsemble</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <input id="model-description-input" class="form-input" type="text">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="dataset">Dataset</label>
+                    <div class="upload-container" style="margin-left: 10px;">
+                        <div id="dataset-drop-area" class="drop-area">
+                            <p>Drag & Drop your files here or click to upload</p>
+                            <div id="uploaded-file-container" class="uploaded-file-container" style="display: none; gap: 5px">
+                                <svg height="22px" width="22px" fill="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22">
+                                    <path stroke="#000000" d="M19 9V17.8C19 18.9201 19 19.4802 18.782 19.908C18.5903 20.2843 18.2843 20.5903 17.908 20.782C17.4802 21 16.9201 21 15.8 21H8.2C7.07989 21 6.51984 21 6.09202 20.782C5.71569 20.5903 5.40973 20.2843 5.21799 19.908C5 19.4802 5 18.9201 5 17.8V6.2C5 5.07989 5 4.51984 5.21799 4.09202C5.40973 3.71569 5.71569 3.40973 6.09202 3.21799C6.51984 3 7.0799 3 8.2 3H13M19 9L13 3M19 9H14C13.4477 9 13 8.55228 13 8V3" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>
+                                </svg>
+                                <label id="uploaded-file-label" class="uploaded-file-label" style="font-size: medium"></label>
+                            </div>
+                            <input class="fileElement" type="file" id="datasetFileElem" multiple>
+                        </div>
+                    </div>
+                </div>
+                <button id="train-button">Train</button>
+                <div class="error" id="error">An error occurred during training.</div>
+                <div class="success" id="success">
+                    <p>Model trained successfully!</p>
+                    <button id="download-button"></button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div style="width: 80%; border: 1px #E6E6E6 solid; margin:0px; padding:0px"></div>
+    <footer id="footer"></footer>
+    
+    <script src="/js/onload.js"></script>
+    <script src="/js/model_training_view/onload.js"></script>
+</body>
+</html>

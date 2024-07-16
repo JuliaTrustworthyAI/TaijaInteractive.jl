@@ -1,0 +1,5 @@
+# Specifies the (partial) Blue Style Guide for Julia.
+# More information on Blue is available here: https://github.com/JuliaDiff/BlueStyle.
+style = "blue"
+
+ignore = ["build/GenieViews/*", "scripts"]

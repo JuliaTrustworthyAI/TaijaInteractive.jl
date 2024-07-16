@@ -1,0 +1,673 @@
+openapi: 3.0.3
+info:
+  title: TaijaInteractive backend API
+  version: 1.0.0
+  description: Backend API for TaijaInteractive
+paths:
+
+  /train:
+    get: 
+      tags: ["Training Classifier"]
+      summary: "Get html of classifier training page"
+      responses:
+        '200':
+          description: "Successfully fetched train page"
+          content:
+            text/html:
+              schema:
+                type: string
+                example: "<html><body><h1>Train a classifier</h1><form action='/train_model' method='post'><label for='train_data'>Train Data:</label><input type='text' id='train_data' name='train_data'><br><label for='model'>Model:</label><input type='text' id='model' name='model'><br><label for='training'>Training:</label><input type='text' id='training' name='training'><br><input type='submit' value='Submit'></form></body></html>"
+        '500':
+          description: "Internal server error"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "An error occurred while processing the request."
+  /train_model: 
+    post:
+      tags: ["Training Classifier"]
+      summary: Train a classifier request
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                train_data:
+                  $ref: '#/components/schemas/TrainData'
+                model:
+                  $ref: '#/components/schemas/Model'
+                training:
+                  $ref: '#/components/schemas/Training'
+              required:
+                - train_data
+                - model
+                - training
+              additionalProperties: false
+      responses:
+        '200':
+          description: Successfully initiated training
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Training initiated successfully."
+                  job_id:
+                    type: string
+                    example: "123e4567-e89b-12d3-a456-426614174000"
+        '400':
+          description: Bad request. Invalid input parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid input data."
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "An error occurred while processing the request."
+
+  /pool/{id}:
+    get:
+      tags: ["Dashboard"]
+      summary: Retrieve dashboard view for a specific ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID to get the dashboard view for
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: HTML content of the dashboard view
+          content:
+            text/html:
+              schema:
+                type: string
+                example: "<html>...</html>"
+        '400':
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid ID"
+        '404':
+          description: ID not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "ID not found"
+
+  /pool:
+    get:
+      tags: ["Dashboard"]
+      summary: Retrieve all dashboard boards
+      responses:
+        '200':
+          description: HTML content of the pool view
+          content:
+            text/html:
+              schema:
+                type: string
+                example: "<html>...</html>"
+
+  /pool/{id}/create_dataset:
+    post:
+      tags: ["Database", "Dataset"]
+      summary: Create a new dataset for a sp  ecific dashboard
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the dashboard to create a dataset for
+          schema:
+            type: integer
+      requestBody:
+        description: Dataset creation data
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+      responses:
+        '201':
+          description: Dataset created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  message:
+                    type: string
+                    example: "Dataset created successfully"
+        '400':
+          description: Invalid input data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid input data"
+        '404':
+          description: Dashboard ID not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Dashboard ID not found"
+
+  /pool/create:
+    post:
+      summary: Create a new dashboard
+      requestBody:
+        description: Dashboard creation data
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+      responses:
+        '201':
+          description: Dashboard created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  message:
+                    type: string
+                    example: "Dashboard created successfully"
+        '400':
+          description: Invalid input data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid input data"
+
+  /pool/{id}/update:
+    post:
+      summary: Update a specific dashboard
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the dashboard to update
+          schema:
+            type: integer
+      requestBody:
+        description: Dashboard update data
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+      responses:
+        '200':
+          description: Dashboard updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  message:
+                    type: string
+                    example: "Dashboard updated successfully"
+        '400':
+          description: Invalid input data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid input data"
+        '404':
+          description: Dashboard ID not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Dashboard ID not found"
+
+  /board/get/{id}:
+    get:
+      tags: ["Database", "Dashboard"]
+      summary: Retrieve a dashboard by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the dashboard to retrieve
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Dashboard retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+        '404':
+          description: Dashboard not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Dashboard not found"
+
+  /element/{id}/render:
+    get:
+      tags: ["Database", "Element"]
+      summary: Render a specific element by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the element to render
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Element rendered successfully
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Rendered Element Content"
+        '404':
+          description: Element not found
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Element not found"
+
+  /dashboardelements/create:
+    post:
+      tags: ["Database", "DashboardElement"]
+      summary: Create a new dashboard element
+      requestBody:
+        description: Dashboard element creation data
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+      responses:
+        '201':
+          description: Dashboard element created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  message:
+                    type: string
+                    example: "Dashboard element created successfully"
+        '400':
+          description: Invalid input data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid input data"
+
+  /dashboardelements/{id}/update:
+    post:
+      tags: ["Database", "DashboardElement"]
+      summary: Update a specific dashboard element
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the dashboard element to update
+          schema:
+            type: integer
+      requestBody:
+        description: Dashboard element update data
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+      responses:
+        '200':
+          description: Dashboard element updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  message:
+                    type: string
+                    example: "Dashboard element updated successfully"
+        '400':
+          description: Invalid input data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid input data"
+        '404':
+          description: Dashboard element not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Dashboard element not found"
+
+  /dashboardelements/{id}/delete:
+    delete:
+      tags: ["Database", "DashboardElement"]
+      summary: Delete a specific dashboard element
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the dashboard element to delete
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Dashboard element deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Dashboard element deleted successfully"
+        '404':
+          description: Dashboard element not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Dashboard element not found"
+
+  /pool/{id}/delete:
+    delete:
+      tags: ["Database", "Dashboard"]
+      summary: Delete a specific dashboard
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the dashboard to delete
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Dashboard deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Dashboard deleted successfully"
+        '404':
+          description: Dashboard not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Dashboard not found"
+
+  /board:
+    post:
+      tags: ["Database", "Dashboard"]
+      summary: Create a new dashboard
+      requestBody:
+        description: Dashboard creation data
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+      responses:
+        '201':
+          description: Dashboard created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  message:
+                    type: string
+                    example: "Dashboard created successfully"
+        '400':
+          description: Invalid input data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid input data"
+
+
+
+
+components:
+  schemas:
+    TrainData:
+      type: object
+      properties:
+        source:
+          type: string
+          format: uri
+          example: "s3://bucket/dataset.csv"
+        format:
+          type: string
+          enum: [csv, json]
+          example: "csv"
+        features:
+          type: array
+          items:
+            type: string
+          example: ["age", "income", "education_level"]
+        label:
+          type: string
+          example: "purchased"
+        split_ratio:
+          type: object
+          properties:
+            train:
+              type: number
+              format: float
+              minimum: 0
+              maximum: 1
+              example: 0.7
+            validation:
+              type: number
+              format: float
+              minimum: 0
+              maximum: 1
+              example: 0.2
+            test:
+              type: number
+              format: float
+              minimum: 0
+              maximum: 1
+              example: 0.1
+          required:
+            - train
+            - validation
+            - test
+          additionalProperties: false
+      required:
+        - source
+        - format
+        - features
+        - label
+        - split_ratio
+      additionalProperties: false
+    Model:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [RandomForest, SVM, NeuralNetwork]
+          example: "RandomForest"
+        hyperparameters:
+          type: object
+          properties:
+            n_estimators:
+              type: number
+              minimum: 1
+              example: 100
+            max_depth:
+              type: number
+              minimum: 1
+              example: 10
+            min_samples_split:
+              type: number
+              minimum: 2
+              example: 2
+          required:
+            - n_estimators
+            - max_depth
+            - min_samples_split
+          additionalProperties: true
+      required:
+        - type
+        - hyperparameters
+      additionalProperties: false
+    Training:
+      type: object
+      properties:
+        epochs:
+          type: number
+          minimum: 1
+          example: 50
+        batch_size:
+          type: number
+          minimum: 1
+          example: 32
+        learning_rate:
+          type: number
+          minimum: 0
+          format: float
+          example: 0.01
+      required:
+        - epochs
+        - batch_size
+        - learning_rate
+      additionalProperties: false
+    TrainClassifierRequest:
+      type: object
+      properties:
+        train_data:
+          $ref: '#/components/schemas/TrainData'
+        model:
+          $ref: '#/components/schemas/Model'
+        training:
+          $ref: '#/components/schemas/Training'
+      required:
+        - train_data
+        - model
+        - training
+      additionalProperties: false

@@ -1,0 +1,278 @@
+:root {
+    --primary-color: #3C50E0;
+    --secondary-color: #DFE2E6;
+    --neutral-color: #ffffff;
+    --success-color: #34D399;
+    --danger-color: #F87171;
+    --warning-color: #FBBF24;
+    --info-color: #17a2b8;
+}
+
+#vertical-menu-toggle {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    border-radius: 0;
+    height: 100%;
+    width: 50px;
+    
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-color); 
+    border: none; 
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    
+}
+
+#vertical-menu-toggle-text {
+    color: var(--neutral-color);
+
+    transform: rotate(-90deg);
+    white-space: nowrap;
+}
+
+#vertical-menu {
+    background-color: var(--secondary-color); 
+
+    max-width: 800px;
+    min-width:  0px;
+    width: fit-content;
+    height: 100vh; 
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+
+    top: 0;
+    right: 0;
+
+    
+    position: fixed;
+
+    list-style: none; 
+
+    padding: 0; 
+    margin: 0;
+}
+
+
+
+#inner-vertical-menu {
+
+    display: none;
+    flex-direction: column;
+    justify-content: left;
+    align-items: stretch;
+
+    box-sizing: border-box;
+    
+    width: 100%;
+    height: 100%;
+
+    padding-left: 35px;
+    padding-right: 20px;
+    padding-top: 30px;
+    padding-bottom: 15px;
+
+    overflow-y:visible;
+}
+
+.inner-vertical-menu-items {
+    color: black;
+    /*background-color: #17a2b8;*/
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    justify-items: left;
+    
+
+    align-self: flex-start;
+    
+    box-sizing: border-box;
+    
+    width: 100%;
+    height: 100%;
+
+    flex-grow: 1;
+    max-height: 90%;
+    overflow-y: auto;
+
+}
+
+.parameter-type {
+    padding-top: 10px;
+    padding-bottom: 2px;
+
+    color: #515151;
+    width: fit-content;
+
+    font-weight: 600;
+    font-size: 25px;
+}
+
+.inner-vertical-menu-item {
+    color: black;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+    height: fit-content;
+    width: fit-content;
+    
+    box-sizing: border-box;
+    border-radius: 6px;
+    
+    padding: 1px;
+    margin-top: 1px;
+    
+    flex-shrink: 0;
+
+}
+
+.inner-vertical-menu-import-items {
+    color: black;
+    /*background-color: black;*/
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    justify-items: center;
+    align-items: center;
+
+    align-self: flex-end;
+    
+    box-sizing: border-box;
+    
+    width: 100%;
+    height: fit-content;
+
+    bottom: 0px;
+    
+    padding: 5px;
+    margin: 10px;
+
+    gap: 10px;
+
+    flex-shrink: 0;
+}
+
+.inner-vertical-menu-import-button {
+
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.element-button {
+    background-color: var(--primary-color);
+    color: white;
+
+    border: none;
+    border-radius: 6px;
+
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 22.5px;
+
+    padding: 4px;
+
+    cursor: pointer;
+
+}
+
+
+#element-button-container {
+    
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: left;
+
+    border-radius: 6px;
+    
+    width: 100%;
+    height: 100%;
+    
+    padding: 3px;
+    gap: 10px;
+}
+
+#element-button-container button:hover{
+
+    border-color: white;
+    border-width: 2px;
+    border-radius: 6px;
+    border-style: solid;
+
+    
+}
+
+.inner-vertical-menu-submit {
+    /*background-color: black;*/
+    color: white;
+
+    height: fit-content;
+    width: fit-content;
+
+    box-sizing: border-box;
+    border-radius: 6px;
+
+    padding: 10px;
+    margin-top: 20px;
+    margin-bottom: 50px;
+
+    font-family: Inter;
+    font-size: 20px;
+    font-weight: 500;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    justify-items:flex-start;
+    align-items: left;
+
+    overflow-y: auto;
+}
+
+.huggingface-status-container {
+    display: flex;
+    align-items: center;
+    font-family: Inter;
+    gap: 5px;
+    margin-top: 8px;
+  }
+
+.huggingface-status-text {
+margin-right: 10px;
+font-size: 16px;
+}
+
+.huggingface-status-text:hover {
+    text-decoration: underline;
+    border-color: black;
+    background-color: #f0f0f0;
+    color: blue;
+    border-radius: 6px;
+    padding: 2px;
+}
+
+.huggingface-status-circle {
+width: 20px;
+height: 20px;
+border-radius: 50%;
+background-color: red; /* Default to red for failed status */
+}
+
+.huggingface-status-circle.success {
+background-color: green; /* Green for successful login */
+}
